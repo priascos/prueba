@@ -1,0 +1,14 @@
+{% extends 'base.html.twig'%}
+
+        {% block body %}
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                {% for message in app.flashes('exito') %}
+                <div class="alert alert-success">
+                {{message}}   
+                </div>
+                {% endfor %}
+                {{form(formulario)}}
+                <a  class="btn btn-secondary" href="{{ path('index_product') }}">List</a>
+        </main>
+        {% endblock %}
+

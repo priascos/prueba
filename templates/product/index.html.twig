@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+  {% block body %}
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+              
+              {% for message in app.flashes('exito') %}
+              <div class="alert alert-success">
+              {{message}}   
+              </div>
+              {% endfor %}
+              {# total items count #}
+      {# <div class="count">
+          {{ pagination.getTotalItemCount }}
+      </div> #}
+      <h2>Product list</h2>
+          <div class="table-responsive">
+              <table class="table table-striped table-sm">
+                  <tr>
+                      {# sorting of properties based on query components #}
+                      <th scope="col">{{ knp_pagination_sortable(pagination, 'Id', 'p.id') }}</th>
+                      <th scope="col"{% if pagination.isSorted('p.name') %} class="sorted"{% endif %}>
+                          {{ knp_pagination_sortable(pagination, 'Name', 'p.name') }}
+                      </th>
+                      <th scope="col"{% if pagination.isSorted('p.description') %} class="sorted"{% endif %}>
+                          {{ knp_pagination_sortable(pagination, 'Description', 'p.description') }}
+                      </th>
+                      <th >
+                        Actions  
+                      </th>
+                  </tr>
+
+                  {# table body #}
+                  {% for product in pagination %}
+                      <tr {% if loop.index is odd %}class="color"{% endif %}>
+                          <td scope="row">{{ product.id }}</td>
+                          <td scope="row">{{ product.name }}</td>
+                          <td scope="row">{{ product.description }}</td>
+                          <td scope="row">
+                          <a  class="btn btn-dark" href="{{ path('edit_product',{id:product.id }) }}">Edit</a> 
+                          {# <a  class="btn btn-danger" href="{{ path('delete_product',{id:product.id }) }}">Delete</a> #}
+                          <div class="modal" tabindex="-1" id="exampleModalToggle">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Delete</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure you want to delete the product?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <a  class="btn btn-danger" href="{{ path('delete_product',{id:product.id }) }}">Confirm</a>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                          <a class="btn btn-danger" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Delete</a>
+                          <a class="btn btn-success"  href="{{ path('excel_product',{id:product.id}) }}" r>Excel</a>
+                          </td>
+                      </tr>
+                  {% endfor %}
+              </table>
+          </div>
+          <a  class="btn btn-secondary" href="{{ path('new_product') }}">New Product</a>
+
+      </main>
+
+  {# display navigation #}
+  <div class="navigation">
+      {{ knp_pagination_render(pagination) }}
+  </div>
+  {% endblock %}
+   

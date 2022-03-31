@@ -3,12 +3,16 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Product
  *
  * @ORM\Table(name="product", indexes={@ORM\Index(name="category", columns={"category"})})
  * @ORM\Entity
+ * @UniqueEntity("name")
+ * @UniqueEntity("code")
  */
 class Product
 {
@@ -24,7 +28,27 @@ class Product
     /**
      * @var string
      *
+     * @ORM\Column(name="code", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message = "empty is not allowed")
+     * @Assert\Type(type="alnum", message = "No special characters or spaces allowed")
+     * @Assert\Length(
+     *      min = 4,
+     *      max = 10,
+     *      minMessage = "Your first name must be at least {{ limit }} characters long",
+     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
+     * )
+     */
+    private $code;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message = "empty is not allowed")
+     * @Assert\Length(
+     *      min = 4,
+     *      minMessage = "Your first name must be at least {{ limit }} characters long",
+     * )
      */
     private $name;
 
@@ -32,6 +56,7 @@ class Product
      * @var string
      *
      * @ORM\Column(name="description", type="text", length=65535, nullable=false)
+     * @Assert\NotBlank(message = "empty is not allowed")
      */
     private $description;
 
@@ -39,6 +64,7 @@ class Product
      * @var string
      *
      * @ORM\Column(name="brand", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message = "empty is not allowed")
      */
     private $brand;
 
@@ -46,6 +72,8 @@ class Product
      * @var float
      *
      * @ORM\Column(name="price", type="float", precision=10, scale=0, nullable=false)
+     * @Assert\NotBlank(message = "empty is not allowed")
+     * @Assert\Positive
      */
     private $price;
 
@@ -83,6 +111,18 @@ class Product
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): self
+    {
+        $this->code = $code;
+
+        return $this;
     }
 
     public function getName(): ?string

@@ -1,0 +1,62 @@
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+        {% block body %}
+        {# <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            {% for message in app.flashes('exito') %}
+            <div class="alert alert-success">
+            {{message}}   
+            </div>
+            {% endfor %}
+            {{form(form)}}
+        </main> #}
+        <style>
+        
+            html {
+                font-family: 'helvetica neue', helvetica, arial, sans-serif;
+            }
+            table {
+                width: 100%;
+                margin-bottom: 1rem;
+                color: #212529;
+                vertical-align: top;
+                border-color: #dee2e6;
+                table-layout: fixed;
+                width: 100%;
+                border-collapse: collapse;
+            }
+            td
+                {
+                    text-align: center;
+                    width: 100%;
+                    vertical-align: middle;
+                    border: 1px solid #006ac1;
+                    background-color: #00AEEF;
+                    color: #ffffff;
+                } 
+        </style>
+
+        <h1>product impression</h1>
+        <table class="table-primary">
+        <tr>
+        <td><h3>name</h3></td>
+        <td>{{product.name}}</td>
+        </tr>
+        <tr>
+        <td>code</td>
+        <td>{{product.code}}</td>
+        </tr>
+        <tr>
+        <td>brand</td>
+        <td>{{product.brand}}</td>
+        </tr>
+        <tr>
+        <td>description</td>
+        <td>{{product.description}}</td>
+        </tr>
+        </table>
+        {% endblock %}
+

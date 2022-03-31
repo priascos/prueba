@@ -6,12 +6,29 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use App\Entity\Category;
+use App\Form\CategoryType;
+use App\Form\SubmitType;
+use App\Controller\ManagerRegistry;
 
 
 class CategoryController extends AbstractController
 {
+    #[Route('/category', name: 'cateory')]
+    public function index()
+    {
+
+        $category = new Category();
+        $form = $this->createForm(CategoryType::class, $category);
+
+
+        return $this->render(
+            'category/index.html.twig',[
+            'controller_name' => 'Welcome to your new controller!',
+            'formulario' => $form->createView(),
+            ]);
+    }
     
     // public function createCategory(ManagerRegistry $doctrine): Response
     // {
@@ -57,14 +74,14 @@ class CategoryController extends AbstractController
     // }
 
     
-    public function number(): Response
-    {
-        $number = random_int(0, 100);
+    // public function number(): Response
+    // {
+    //     $number = random_int(0, 100);
 
-        return $this->render('lucky/number.html.twig', [
-            'number' => $number,
-        ]);
-    }
+    //     return $this->render('category/new.html.twig', [
+    //         'number' => $number,
+    //     ]);
+    // }
     
 
 
